@@ -1,7 +1,7 @@
 import { Toolkit } from 'actions-toolkit'
 import readFile from './read-file'
 
-export default async function createCommit (tools: Toolkit) {
+export default async function createCommit(tools: Toolkit) {
   const { main } = tools.getPackageJSON()
 
   tools.log.info('Creating tree')

@@ -1,7 +1,11 @@
 import semver from 'semver'
 import { Toolkit } from 'actions-toolkit'
 
-export default async function createOrUpdateMajorRef (tools: Toolkit, sha: string, tagName: string) {
+export default async function createOrUpdateMajorRef(
+  tools: Toolkit,
+  sha: string,
+  tagName: string
+) {
   const refName = `tags/v${semver.major(tagName)}`
   tools.log.info(`Updating major version tag ${refName}`)
   const { data: matchingRefs } = await tools.github.git.listMatchingRefs({

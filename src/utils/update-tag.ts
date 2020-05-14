@@ -1,6 +1,10 @@
-import { Toolkit } from "actions-toolkit";
+import { Toolkit } from 'actions-toolkit'
 
-export default async function updateTag(tools: Toolkit, sha: string, tagName: string) {
+export default async function updateTag(
+  tools: Toolkit,
+  sha: string,
+  tagName: string
+) {
   const ref = `tags/${tagName}`
 
   tools.log.info(`Updating ${ref}`)
