@@ -8,4 +8,10 @@ describe('read-file', () => {
     const result = await readFile(baseDir, 'file.md')
     expect(result).toBe('Hello!')
   })
+
+  it('throws if the file does not exist', async () => {
+    await expect(readFile(baseDir, 'nope')).rejects.toThrowError(
+      'nope does not exist.'
+    )
+  })
 })
