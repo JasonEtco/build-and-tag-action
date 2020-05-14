@@ -3,12 +3,17 @@ import path from 'path'
 import { Toolkit } from 'actions-toolkit'
 import semver from 'semver'
 
+async function readFile (tools: Toolkit, file: string) {
+  const pathToFile = path.join(tools.workspace, file)
+  if (!fs.existsSync(file)) {
+    throw new Error(`${file} does not exist.`)
+  }
+ 
+  return fs.promises.readFile(pathToFile, 'utf8')
+}
+
 Toolkit.run(async tools => {
   const { main } = tools.getPackageJSON()
-
-  const [actionYaml, code] = await Promise.all(['action.yml', main].map(name =>
-    fs.promises.readFile(path.join(tools.workspace, name), 'utf8')
-  ))
 
   tools.log.info('Creating tree')
   const tree = await tools.github.git.createTree({
@@ -18,14 +23,14 @@ Toolkit.run(async tools => {
         path: 'action.yml',
         mode: '100644',
         type: 'blob',
-        content: actionYaml,
+        content: await readFile(tools, 'action.yml'),
         sha: tools.context.sha
       },
       {
         path: main,
         mode: '100644',
         type: 'blob',
-        content: code,
+        content: await readFile(tools, main),
         sha: tools.context.sha
       }
     ]

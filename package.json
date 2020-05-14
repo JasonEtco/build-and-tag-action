@@ -1,7 +1,7 @@
 {
   "name": "build-and-tag-action",
   "private": true,
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "scripts": {
     "start": "npx ncc run ./src/index.ts",
     "build": "npx ncc build ./src/index.ts",
