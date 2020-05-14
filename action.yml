@@ -1,8 +1,8 @@
 name: Build and Tag
 description: Properly tags your GitHub Action
 runs:
-  using: docker
-  image: Dockerfile
+  using: node12
+  runs: dist/index.js
 branding:
   icon: heart
   color: red
