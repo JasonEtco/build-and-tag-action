@@ -6,12 +6,11 @@ import semver from 'semver'
 Toolkit.run(async tools => {
   const { main } = tools.getPackageJSON()
 
-  const readFile = name => fs.promises.readFile(path.join(tools.workspace, name), 'utf8')
-  const [actionYaml, code] = await Promise.all([
-    readFile('action.yml'),
-    readFile(main)
-  ])
+  const [actionYaml, code] = await Promise.all(['action.yml', main].map(name =>
+    fs.promises.readFile(path.join(tools.workspace, name), 'utf8')
+  ))
 
+  tools.log.info('Creating tree')
   const tree = await tools.github.git.createTree({
     ...tools.context.repo,
     tree: [
@@ -34,17 +33,18 @@ Toolkit.run(async tools => {
 
   tools.log.complete('Tree created')
 
+  tools.log.info('Creating commit')
   const commit = await tools.github.git.createCommit({
     ...tools.context.repo,
     message: 'Automatic compilation',
     tree: tree.data.sha,
     parents: [tools.context.sha]
   })
-
   tools.log.complete('Commit created')
 
   const { tag_name: tagName, draft } = tools.context.payload.release
 
+  tools.log.info(`Updating tags/${tagName}`)
   await tools.github.git.updateRef({
     ...tools.context.repo,
     ref: `tags/${tagName}`,
