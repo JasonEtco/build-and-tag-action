@@ -1,5 +1,5 @@
 import { Toolkit } from 'actions-toolkit'
-import buildAndTagAction from './utils'
+import buildAndTagAction from './lib'
 
 Toolkit.run(buildAndTagAction, {
   event: 'release',

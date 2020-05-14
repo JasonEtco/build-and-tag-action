@@ -1,5 +1,5 @@
 import path from 'path'
-import readFile from '../src/utils/read-file'
+import readFile from '../src/lib/read-file'
 
 describe('read-file', () => {
   const baseDir = path.join(__dirname, 'fixtures')
