@@ -4,7 +4,12 @@ import createOrUpdateMajorRef from './utils/create-or-update-major-ref'
 import createCommit from './utils/create-commit'
 import updateTag from './utils/update-tag'
 
-Toolkit.run(
+interface Inputs {
+  setup: string
+  [key: string]: string
+}
+
+Toolkit.run<Inputs>(
   async (tools) => {
     if (tools.inputs.setup) {
       // Run the setup script
