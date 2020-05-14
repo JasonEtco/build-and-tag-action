@@ -6,7 +6,7 @@ describe('read-file', () => {
 
   it('reads the file and returns the contents', async () => {
     const result = await readFile(baseDir, 'file.md')
-    expect(result).toBe('Hello!')
+    expect(result).toBe('Hello!\n')
   })
 
   it('throws if the file does not exist', async () => {
