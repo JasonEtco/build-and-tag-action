@@ -2,9 +2,19 @@ import { Toolkit } from 'actions-toolkit'
 import createOrUpdateMajorRef from './utils/create-or-update-major-ref'
 import createCommit from './utils/create-commit'
 import updateTag from './utils/update-tag'
+import { exec } from '@actions/exec'
 
-Toolkit.run(async tools => {
-  const { tag_name: tagName, draft, prerelease } = tools.context.payload.release
+Toolkit.run<{ setup: string }>(async tools => {
+  if (tools.inputs.setup) {
+    // Run the setup script
+    await exec(tools.inputs.setup)
+  }
+
+  const {
+    tag_name: tagName,
+    draft,
+    prerelease
+  } = tools.context.payload.release
   
   // Create a new commit, with the new tree
   const commit = await createCommit(tools)

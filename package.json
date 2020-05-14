@@ -9,6 +9,7 @@
     "test": "standard && jest --coverage"
   },
   "dependencies": {
+    "@actions/exec": "^1.0.4",
     "actions-toolkit": "^4.0.0",
     "semver": "^7.3.2"
   },

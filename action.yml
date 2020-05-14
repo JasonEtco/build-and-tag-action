@@ -6,3 +6,7 @@ runs:
 branding:
   icon: heart
   color: red
+inputs:
+  setup:
+    default: 'npm ci && npm run build --if-present'
+    description: A command that runs before publishing the action to the release's tag.
