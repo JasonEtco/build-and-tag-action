@@ -5,7 +5,6 @@
   "scripts": {
     "start": "npx ncc run ./src/index.ts",
     "build": "npx ncc build ./src/index.ts",
-    "dev": "GITHUB_EVENT_PATH=$(pwd)/tests/fixtures/sponsor.json npm start",
     "test": "standard && jest --coverage"
   },
   "dependencies": {
