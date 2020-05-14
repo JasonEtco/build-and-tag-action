@@ -1,10 +1,10 @@
 import fs from 'fs'
 import path from 'path'
-import { Toolkit } from 'actions-toolkit'
 
-export default async function readFile(tools: Toolkit, file: string) {
-  const pathToFile = path.join(tools.workspace, file)
-  if (!fs.existsSync(file)) {
+export default async function readFile(baseDir: string, file: string) {
+  const pathToFile = path.join(baseDir, file)
+
+  if (!fs.existsSync(pathToFile)) {
     throw new Error(`${file} does not exist.`)
   }
 

@@ -12,13 +12,13 @@ export default async function createCommit(tools: Toolkit) {
         path: 'action.yml',
         mode: '100644',
         type: 'blob',
-        content: await readFile(tools, 'action.yml')
+        content: await readFile(tools.workspace, 'action.yml')
       },
       {
         path: main,
         mode: '100644',
         type: 'blob',
-        content: await readFile(tools, main)
+        content: await readFile(tools.workspace, main)
       }
     ]
   })
