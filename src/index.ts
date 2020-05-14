@@ -23,15 +23,13 @@ Toolkit.run(async tools => {
         path: 'action.yml',
         mode: '100644',
         type: 'blob',
-        content: await readFile(tools, 'action.yml'),
-        sha: tools.context.sha
+        content: await readFile(tools, 'action.yml')
       },
       {
         path: main,
         mode: '100644',
         type: 'blob',
-        content: await readFile(tools, main),
-        sha: tools.context.sha
+        content: await readFile(tools, main)
       }
     ]
   })
