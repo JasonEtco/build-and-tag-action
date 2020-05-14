@@ -2,7 +2,7 @@ name: Build and Tag
 description: Properly tags your GitHub Action
 runs:
   using: node12
-  runs: dist/index.js
+  main: dist/index.js
 branding:
   icon: heart
   color: red
