@@ -16,3 +16,5 @@ jobs:
       - run: npm ci
       - run: npm run build
       - uses: ./
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
