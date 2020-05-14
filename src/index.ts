@@ -1,7 +1,7 @@
-const fs = require('fs')
-const path = require('path')
-const { Toolkit } = require('actions-toolkit')
-const semver = require('semver')
+import fs from 'fs'
+import path from 'path'
+import { Toolkit } from 'actions-toolkit'
+import semver from 'semver'
 
 Toolkit.run(async tools => {
   const { main } = tools.getPackageJSON()
@@ -20,14 +20,14 @@ Toolkit.run(async tools => {
         mode: '100644',
         type: 'blob',
         content: actionYaml,
-        base_tree: tools.context.sha
+        sha: tools.context.sha
       },
       {
         path: main,
         mode: '100644',
         type: 'blob',
         content: code,
-        base_tree: tools.context.sha
+        sha: tools.context.sha
       }
     ]
   })

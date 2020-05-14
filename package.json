@@ -1,9 +1,10 @@
 {
   "name": "build-and-tag-action",
   "private": true,
-  "main": "index.js",
+  "main": "src/index.ts",
   "scripts": {
-    "start": "node ./index.js",
+    "start": "npx ncc run ./src/index.ts",
+    "build": "npx ncc build ./src/index.ts",
     "dev": "GITHUB_EVENT_PATH=$(pwd)/tests/fixtures/sponsor.json npm start",
     "test": "standard && jest --coverage"
   },
@@ -12,10 +13,14 @@
     "semver": "^7.3.2"
   },
   "devDependencies": {
+    "@tsconfig/node12": "^1.0.0",
+    "@types/semver": "^7.2.0",
+    "@zeit/ncc": "^0.22.1",
     "jest": "^26.0.1",
     "js-yaml": "^3.13.1",
     "nock": "^12.0.2",
-    "standard": "^14.3.1"
+    "standard": "^14.3.1",
+    "typescript": "^3.9.2"
   },
   "standard": {
     "env": [
