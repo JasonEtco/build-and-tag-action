@@ -51,6 +51,18 @@ You can customize the `setup` script that's run before pushing the files to the 
 
 The default is `npm ci && npm run build --if-present`. You can disable it entirely by setting `setup: ''`!
 
+**tag_name**
+
+The tag to update. If the workflow event is `release`, it will use the tag_name from the event payload. This option can be useful when using this action in a workflow with other actions that generate a release:
+
+```yaml
+- uses: fictional/releaser@v1 # Not a real action!
+  id: releaser
+- uses: JasonEtco/build-and-tag-action@v1
+  with:
+    tag_name: ${{ steps.releaser.outputs.tag_name }}
+```
+
 ## Motivation
 
 The [guide to JavaScript Actions](https://help.github.com/en/actions/building-actions/creating-a-javascript-action) recommends including `node_modules` in your repository, and manual steps to [following the versioning recommendations](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#versioning). There are anti-patterns there that just don't sit right with me; so we can enable the same workflow, automatically!
