@@ -10,8 +10,10 @@ describe('build-and-tag-action', () => {
   let tools: Toolkit
 
   beforeEach(() => {
+    nock.cleanAll()
     tools = generateToolkit()
     delete process.env.INPUT_SETUP
+    delete process.env.INPUT_TAG_NAME
   })
 
   it('updates the ref and updates an existing major ref', async () => {
@@ -121,5 +123,26 @@ describe('build-and-tag-action', () => {
     await buildAndTagAction(tools)
     expect(spy).toHaveBeenCalled()
     expect(spy).toHaveBeenCalledWith('echo "Hello!"')
+  })
+
+  it('updates the ref and creates a new major ref for an event other than `release`', async () => {
+    nock('https://api.github.com')
+      .patch('/repos/JasonEtco/test/git/refs/tags%2Fv2.0.0')
+      .reply(200)
+      .post('/repos/JasonEtco/test/git/refs')
+      .reply(200)
+      .get('/repos/JasonEtco/test/git/matching-refs/tags%2Fv2')
+      .reply(200, [])
+      .post('/repos/JasonEtco/test/git/commits')
+      .reply(200, { commit: { sha: '123abc' } })
+      .post('/repos/JasonEtco/test/git/trees')
+      .reply(200)
+
+    tools.context.event = 'pull_request'
+    process.env.INPUT_TAG_NAME = 'v2.0.0'
+
+    await buildAndTagAction(tools)
+
+    expect(nock.isDone()).toBe(true)
   })
 })
