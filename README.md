@@ -49,6 +49,8 @@ You can customize the `setup` script that's run before pushing the files to the 
     GITHUB_TOKEN: ${{ github.token }}
 ```
 
+The default is `npm ci && npm run build --if-present`. You can disable it entirely by setting `setup: ''`!
+
 ## Motivation
 
 The [guide to JavaScript Actions](https://help.github.com/en/actions/building-actions/creating-a-javascript-action) recommends including `node_modules` in your repository, and manual steps to [following the versioning recommendations](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#versioning). There are anti-patterns there that just don't sit right with me; so we can enable the same workflow, automatically!
