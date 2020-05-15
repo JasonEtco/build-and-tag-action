@@ -35,6 +35,8 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 ```
 
+You can also use this action with other events - you'll just need to specify a `tag_name` (see below).
+
 ## Options
 
 **setup**
@@ -53,7 +55,7 @@ The default is `npm ci && npm run build --if-present`. You can disable it entire
 
 **tag_name**
 
-The tag to update. If the workflow event is `release`, it will use the tag_name from the event payload. This option can be useful when using this action in a workflow with other actions that generate a release:
+The tag to update. If the workflow event is `release`, it will use the `tag_name` from the event payload. This option can be useful when using this action in a workflow with other actions that generate a release:
 
 ```yaml
 - uses: fictional/releaser@v1 # Not a real action!
