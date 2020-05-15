@@ -35,6 +35,8 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 ```
 
+You can also use this action with other events - you'll just need to specify a `tag_name` (see below).
+
 ## Options
 
 **setup**
@@ -50,6 +52,18 @@ You can customize the `setup` script that's run before pushing the files to the 
 ```
 
 The default is `npm ci && npm run build --if-present`. You can disable it entirely by setting `setup: ''`!
+
+**tag_name**
+
+The tag to update. If the workflow event is `release`, it will use the `tag_name` from the event payload. This option can be useful when using this action in a workflow with other actions that generate a release:
+
+```yaml
+- uses: fictional/releaser@v1 # Not a real action!
+  id: releaser
+- uses: JasonEtco/build-and-tag-action@v1
+  with:
+    tag_name: ${{ steps.releaser.outputs.tag_name }}
+```
 
 ## Motivation
 
