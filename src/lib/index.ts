@@ -8,11 +8,15 @@ import getTagName from './get-tag-name'
 export default async function buildAndTagAction(tools: Toolkit) {
   if (tools.inputs.setup) {
     // Run the setup script
+    tools.log.info(`Running setup script: ${tools.inputs.setup}`)
     await exec(tools.inputs.setup)
+  } else {
+    tools.log.info('Skipping setup script, none provided.')
   }
 
   // Get the tag to update
   const tagName = getTagName(tools)
+  tools.log.info(`Updating tag [${tagName}]`)
 
   // Create a new commit, with the new tree
   const commit = await createCommit(tools)
