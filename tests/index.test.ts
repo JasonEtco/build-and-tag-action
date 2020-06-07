@@ -122,7 +122,7 @@ describe('build-and-tag-action', () => {
 
     await buildAndTagAction(tools)
     expect(spy).toHaveBeenCalled()
-    expect(spy).toHaveBeenCalledWith('echo "Hello!"')
+    expect(spy).toHaveBeenCalledWith('bash -c', ['echo "Hello!"'])
   })
 
   it('updates the ref and creates a new major ref for an event other than `release`', async () => {
