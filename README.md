@@ -5,7 +5,7 @@
 
 ---
 
-A GitHub Action for publishing JavaScript Actions! It's designed to act on new releases, and updates the tag with a compiled JS file, using [`@zeit/ncc`](https://github.com/zeit/ncc). The process looks like this:
+A GitHub Action for publishing JavaScript Actions! It's designed to act on new releases, and updates the tag with a compiled JS file, using [`@vercel/ncc`](https://github.com/vercel/ncc). The process looks like this:
 
 - Runs the `setup` input (default: `npm ci && npm run build`)
 - Reads the `main` property in your `package.json`
@@ -14,7 +14,7 @@ A GitHub Action for publishing JavaScript Actions! It's designed to act on new r
 
 <img width="1005" alt="image" src="https://user-images.githubusercontent.com/10660468/82084147-d894ca00-96b8-11ea-9a14-1640d6963213.png">
 
-This repository even uses it! `@zeit/ncc` supports TypeScript out of the box 😍
+This repository even uses it! `@vercel/ncc` supports TypeScript out of the box 😍
 
 ## Usage
 
