@@ -2,7 +2,11 @@ import { Toolkit } from 'actions-toolkit'
 import readFile from './read-file'
 
 export default async function createCommit(tools: Toolkit) {
-  const { main } = tools.getPackageJSON()
+  const { main } = tools.getPackageJSON<{ main?: string }>()
+
+  if (!main) {
+    throw new Error('Property "main" does not exist in your `package.json`.')
+  }
 
   tools.log.info('Creating tree')
   const tree = await tools.github.git.createTree({

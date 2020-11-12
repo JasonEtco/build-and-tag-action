@@ -36,4 +36,11 @@ describe('create-commit', () => {
     expect(commitParams.message).toBe('Automatic compilation')
     expect(commitParams.parents).toEqual([tools.context.sha])
   })
+
+  it('creates the tree and commit', async () => {
+    jest.spyOn(tools, 'getPackageJSON').mockReturnValueOnce({})
+    await expect(() => createCommit(tools)).rejects.toThrow(
+      'Property "main" does not exist in your `package.json`.'
+    )
+  })
 })
