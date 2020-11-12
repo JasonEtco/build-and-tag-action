@@ -40,6 +40,22 @@ jobs:
 
 You can also use this action with other events - you'll just need to specify a `tag_name` (see below).
 
+## Example `package.json` for your project
+
+The two important thing you'll need to set in your action are the `main` field and the `build` script. Here's an example of a minimal `package.json` that will use `@vercel/ncc` to compile your action to `dist/index.js` and point `build-and-tag-action` at the compiled file:
+
+```json
+{
+  "name": "your-action-name",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "npx @vercel/ncc build"
+  }
+}
+```
+
+Your `package.json` will probably contain a `dependencies` section, in addition to other fields such as `license`.
+
 ## Options
 
 **setup**
