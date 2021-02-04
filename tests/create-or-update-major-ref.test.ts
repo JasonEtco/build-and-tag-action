@@ -1,5 +1,5 @@
 import nock from 'nock'
-import createOrUpdateMajorRef from '../src/lib/create-or-update-major-ref'
+import createOrUpdateMajorRef from '../src/lib/create-or-update-ref'
 import { generateToolkit } from './helpers'
 import { Toolkit } from 'actions-toolkit'
 
