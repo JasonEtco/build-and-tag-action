@@ -1,9 +1,9 @@
 import nock from 'nock'
-import createOrUpdateMajorRef from '../src/lib/create-or-update-ref'
+import createOrUpdateRef from '../src/lib/create-or-update-ref'
 import { generateToolkit } from './helpers'
 import { Toolkit } from 'actions-toolkit'
 
-describe('create-or-update-major-ref', () => {
+describe('create-or-update-ref', () => {
   let tools: Toolkit
 
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe('create-or-update-major-ref', () => {
       .get('/repos/JasonEtco/test/git/matching-refs/tags%2Fv1')
       .reply(200, [{ ref: 'tags/v1' }])
 
-    await createOrUpdateMajorRef(tools, '123abc', 'v1.0.0')
+    await createOrUpdateRef(tools, '123abc', '1')
 
     expect(nock.isDone()).toBe(true)
   })
@@ -33,9 +33,26 @@ describe('create-or-update-major-ref', () => {
       .get('/repos/JasonEtco/test/git/matching-refs/tags%2Fv1')
       .reply(200, [])
 
-    await createOrUpdateMajorRef(tools, '123abc', 'v1.0.0')
+    await createOrUpdateRef(tools, '123abc', '1')
 
     expect(nock.isDone()).toBe(true)
     expect(params.ref).toBe('refs/tags/v1')
+  })
+
+  it('creates a new minor ref if it does not already exist', async () => {
+    let params: any
+
+    nock('https://api.github.com')
+      .post('/repos/JasonEtco/test/git/refs')
+      .reply(200, (_, body) => {
+        params = body
+      })
+      .get('/repos/JasonEtco/test/git/matching-refs/tags%2Fv1.0')
+      .reply(200, [])
+
+    await createOrUpdateRef(tools, '123abc', '1.0')
+
+    expect(nock.isDone()).toBe(true)
+    expect(params.ref).toBe('refs/tags/v1.0')
   })
 })
