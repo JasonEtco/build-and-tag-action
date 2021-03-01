@@ -7,7 +7,6 @@
 
 A GitHub Action for publishing JavaScript Actions! It's designed to act on new releases, and updates the tag with a compiled JS file, using [`@vercel/ncc`](https://github.com/vercel/ncc). The process looks like this:
 
-- Runs the `setup` input (default: `npm ci && npm run build`)
 - Reads the `main` property in your `package.json`
 - Force pushes `action.yml` and the above file to the release's tag
 - Force pushes to the major version tag (ex: `v1.0.0` -> `v1`)
@@ -33,6 +32,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.release.tag_name }}
+      - name: Install deps and build
+        run: npm ci && npm run build
       - uses: JasonEtco/build-and-tag-action@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
@@ -57,20 +58,6 @@ The two important thing you'll need to set in your action are the `main` field a
 Your `package.json` will probably contain a `dependencies` section, in addition to other fields such as `license`.
 
 ## Options
-
-**setup**
-
-You can customize the `setup` script that's run before pushing the files to the tag.
-
-```yaml
-- uses: JasonEtco/build-and-tag-action@v1
-  with:
-    setup: 'npm ci && npm run super-build'
-  env:
-    GITHUB_TOKEN: ${{ github.token }}
-```
-
-The default is `npm ci && npm run build --if-present`. You can disable it entirely by setting `setup: ''`!
 
 **tag_name**
 
