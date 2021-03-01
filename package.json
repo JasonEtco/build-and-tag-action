@@ -8,8 +8,6 @@
     "test": "jest --coverage"
   },
   "dependencies": {
-    "@actions/exec": "^1.0.4",
-    "@actions/io": "^1.0.2",
     "actions-toolkit": "^6.0.1",
     "semver": "^7.3.2"
   },

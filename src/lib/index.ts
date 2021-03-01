@@ -1,6 +1,4 @@
 import { Toolkit } from 'actions-toolkit'
-import { exec } from '@actions/exec'
-import { which } from '@actions/io'
 import semver from 'semver'
 import createOrUpdateRef from './create-or-update-ref'
 import createCommit from './create-commit'
@@ -8,22 +6,6 @@ import updateTag from './update-tag'
 import getTagName from './get-tag-name'
 
 export default async function buildAndTagAction(tools: Toolkit) {
-  if (tools.inputs.setup) {
-    // Run the setup script
-    tools.log.info(`Running setup script: ${tools.inputs.setup}`)
-
-    if (!which('bash')) {
-      // Ensure that bash is present
-      throw new Error(
-        "This environment does not have bash, so the setup script cannot be run. Set [with.setup: ''] to disable it."
-      )
-    }
-
-    await exec('bash -c', [tools.inputs.setup])
-  } else {
-    tools.log.info('Skipping setup script, none provided.')
-  }
-
   // Get the tag to update
   const tagName = getTagName(tools)
   tools.log.info(`Updating tag [${tagName}]`)
