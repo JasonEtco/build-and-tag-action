@@ -37,6 +37,28 @@ describe('create-commit', () => {
     expect(commitParams.parents).toEqual([tools.context.sha])
   })
 
+  it('creates the tree and commit with additional files', async () => {
+    process.env.INPUT_ADDITIONAL_FILES="package.json,additional.js"
+
+    await createCommit(tools)
+    expect(nock.isDone()).toBe(true)
+
+    // Test that our tree was created correctly
+    expect(treeParams.tree).toHaveLength(4)
+    expect(treeParams.tree.some((obj: any) => obj.path === 'package.json')).toBe(
+      true
+    )
+    expect(treeParams.tree.some((obj: any) => obj.path === 'additional.js')).toBe(
+      true
+    )
+
+    // Test that our commit was created correctly
+    expect(commitParams.message).toBe('Automatic compilation')
+    expect(commitParams.parents).toEqual([tools.context.sha])
+
+    delete process.env.INPUT_ADDITIONAL_FILES;
+  })
+
   it('creates the tree and commit', async () => {
     jest.spyOn(tools, 'getPackageJSON').mockReturnValueOnce({})
     await expect(() => createCommit(tools)).rejects.toThrow(

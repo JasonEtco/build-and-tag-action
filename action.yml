@@ -9,3 +9,5 @@ branding:
 inputs:
   tag_name:
     description: The tag to update. If the workflow event is `release`, it will use the `tag_name` from the event payload.
+  additional_files:
+    description: Any additional files to include in the build
