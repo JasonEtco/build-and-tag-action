@@ -34,7 +34,7 @@ jobs:
           ref: ${{ github.event.release.tag_name }}
       - name: Install deps and build
         run: npm ci && npm run build
-      - uses: JasonEtco/build-and-tag-action@v1
+      - uses: JasonEtco/build-and-tag-action@v2
         env:
           GITHUB_TOKEN: ${{ github.token }}
 ```
