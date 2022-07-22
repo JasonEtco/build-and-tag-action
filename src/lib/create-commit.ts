@@ -8,6 +8,18 @@ export default async function createCommit(tools: Toolkit) {
     throw new Error('Property "main" does not exist in your `package.json`.')
   }
 
+  let additional_files: any[] = []
+  if (tools.inputs.additional_files) {
+    additional_files = tools.inputs.additional_files.split('\n').map(async (f: any) => {
+      return {
+        path: f,
+        mode: '100644',
+        type: 'blob',
+        content: await readFile(tools.workspace, f)
+      }
+    })
+  }
+
   tools.log.info('Creating tree')
   const tree = await tools.github.git.createTree({
     ...tools.context.repo,
@@ -23,7 +35,8 @@ export default async function createCommit(tools: Toolkit) {
         mode: '100644',
         type: 'blob',
         content: await readFile(tools.workspace, main)
-      }
+      },
+      ...additional_files
     ]
   })
 
