@@ -66,7 +66,7 @@ The tag to update. If the workflow event is `release`, it will use the `tag_name
 ```yaml
 - uses: fictional/releaser@v1 # Not a real action!
   id: releaser
-- uses: JasonEtco/build-and-tag-action@v1
+- uses: JasonEtco/build-and-tag-action@v2
   with:
     tag_name: ${{ steps.releaser.outputs.tag_name }}
 ```
