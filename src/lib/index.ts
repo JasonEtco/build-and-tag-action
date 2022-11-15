@@ -10,8 +10,11 @@ export default async function buildAndTagAction(tools: Toolkit) {
   const tagName = getTagName(tools)
   tools.log.info(`Updating tag [${tagName}]`)
 
+  // get commit message from input (if any)
+  const commitMessage = tools.inputs.commit_message
+
   // Create a new commit, with the new tree
-  const commit = await createCommit(tools)
+  const commit = await createCommit(tools, commitMessage)
 
   // Update the tag to point to the new commit
   await updateTag(tools, commit.sha, tagName)
