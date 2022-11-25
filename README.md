@@ -71,6 +71,18 @@ The tag to update. If the workflow event is `release`, it will use the `tag_name
     tag_name: ${{ steps.releaser.outputs.tag_name }}
 ```
 
+## Outputs
+
+**commit_sha**
+
+SHA of the commit newly created.
+
+```yaml
+- uses: JasonEtco/build-and-tag-action@v2
+  id: build-and-tag
+- run: echo "Created commit ${{ steps.build-and-tag.outputs.commit_sha }}"
+```
+
 ## Motivation
 
 The [guide to JavaScript Actions](https://help.github.com/en/actions/building-actions/creating-a-javascript-action) recommends including `node_modules` in your repository, and manual steps to [following the versioning recommendations](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#versioning). There are anti-patterns there that just don't sit right with me; so we can enable the same workflow, automatically!

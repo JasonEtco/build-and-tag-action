@@ -13,6 +13,9 @@ export default async function buildAndTagAction(tools: Toolkit) {
   // Create a new commit, with the new tree
   const commit = await createCommit(tools)
 
+  // set the new commit's sha as an output
+  tools.outputs.commit_sha = commit.sha
+
   // Update the tag to point to the new commit
   await updateTag(tools, commit.sha, tagName)
 
