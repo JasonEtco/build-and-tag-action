@@ -17,7 +17,7 @@ describe('create-or-update-ref', () => {
       .get('/repos/JasonEtco/test/git/matching-refs/tags%2Fv1')
       .reply(200, [{ ref: 'tags/v1' }])
 
-    await createOrUpdateRef(tools, '123abc', '1')
+    await createOrUpdateRef(tools, '123abc', 'v1')
 
     expect(nock.isDone()).toBe(true)
   })
@@ -33,7 +33,7 @@ describe('create-or-update-ref', () => {
       .get('/repos/JasonEtco/test/git/matching-refs/tags%2Fv1')
       .reply(200, [])
 
-    await createOrUpdateRef(tools, '123abc', '1')
+    await createOrUpdateRef(tools, '123abc', 'v1')
 
     expect(nock.isDone()).toBe(true)
     expect(params.ref).toBe('refs/tags/v1')
@@ -50,7 +50,7 @@ describe('create-or-update-ref', () => {
       .get('/repos/JasonEtco/test/git/matching-refs/tags%2Fv1.0')
       .reply(200, [])
 
-    await createOrUpdateRef(tools, '123abc', '1.0')
+    await createOrUpdateRef(tools, '123abc', 'v1.0')
 
     expect(nock.isDone()).toBe(true)
     expect(params.ref).toBe('refs/tags/v1.0')
