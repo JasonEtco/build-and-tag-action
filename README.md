@@ -5,9 +5,12 @@
 
 ---
 
+This is a fork of https://github.com/JasonEtco/build-and-tag-action, which seems to have gone stale.
+
 A GitHub Action for publishing JavaScript Actions! It's designed to act on new releases, and updates the tag with a compiled JS file, using [`@vercel/ncc`](https://github.com/vercel/ncc). The process looks like this:
 
 - Reads the `main` property in your `package.json`
+- Reads the `files` property of your `package.json` to support multiple actions
 - Force pushes `action.yml` and the above file to the release's tag
 - Force pushes to the major version tag (ex: `v1.0.0` -> `v1`)
 
