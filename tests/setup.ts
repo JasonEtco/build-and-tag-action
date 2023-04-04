@@ -8,7 +8,7 @@ import jsYaml from 'js-yaml'
  */
 function getDefaultValues() {
   const yaml = fs.readFileSync(path.join(__dirname, '../action.yml'), 'utf8')
-  const { inputs } = jsYaml.safeLoad(yaml) as any
+  const { inputs } = jsYaml.load(yaml) as any
   return Object.keys(inputs).reduce(
     (sum, key) => ({
       ...sum,
