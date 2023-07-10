@@ -7,8 +7,14 @@ describe('create-commit', () => {
   let tools: Toolkit
   let treeParams: any
   let commitParams: any
+  let blobParams: any[]
 
   beforeEach(() => {
+    blobParams = []
+    tools = generateToolkit()
+  })
+
+  function setupMock(args: {numFiles: number}) {
     nock('https://api.github.com')
       .post('/repos/JasonEtco/test/git/commits')
       .reply(200, (_, body) => {
@@ -18,11 +24,17 @@ describe('create-commit', () => {
       .reply(200, (_, body) => {
         treeParams = body
       })
+      .post('/repos/JasonEtco/test/git/blobs')
+      .times(args.numFiles)
+      .reply(200, (_, body) => {
+        blobParams.push(body)
+      })
 
-    tools = generateToolkit()
-  })
+  }
 
   it('creates the tree and commit', async () => {
+    setupMock({numFiles: 2})
+
     await createCommit(tools)
     expect(nock.isDone()).toBe(true)
 
@@ -38,6 +50,8 @@ describe('create-commit', () => {
   })
 
   it('creates the tree and commit with additional files', async () => {
+    setupMock({numFiles: 4})
+
     process.env.INPUT_ADDITIONAL_FILES="package.json,additional.js"
 
     await createCommit(tools)

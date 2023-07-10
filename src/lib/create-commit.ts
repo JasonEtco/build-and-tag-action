@@ -1,5 +1,5 @@
 import { Toolkit } from 'actions-toolkit'
-import readFile from './read-file'
+import readFileBase64 from './read-file'
 
 // This isn't exported from @octokit/types
 declare type GitCreateTreeParamsTree = {
@@ -23,13 +23,13 @@ export default async function createCommit(tools: Toolkit) {
       path: 'action.yml',
       mode: '100644',
       type: 'blob',
-      content: await readFile(tools.workspace, 'action.yml')
+      sha: (await createBlob(tools, 'action.yml')).sha
     },
     {
       path: main,
       mode: '100644',
       type: 'blob',
-      content: await readFile(tools.workspace, main)
+      sha: (await createBlob(tools, main)).sha
     }
   ];
 
@@ -42,7 +42,7 @@ export default async function createCommit(tools: Toolkit) {
         path,
         mode: '100644',
         type: 'blob',
-        content: await readFile(tools.workspace, path)
+        sha: (await createBlob(tools, path)).sha
       } as GitCreateTreeParamsTree;
     }));
 
@@ -66,4 +66,14 @@ export default async function createCommit(tools: Toolkit) {
   tools.log.complete('Commit created')
 
   return commit.data
+}
+
+async function createBlob(tools: Toolkit, filePath: string) {
+  const content = await readFileBase64(tools.workspace, filePath)
+  const blobData = await tools.github.git.createBlob({
+    ...tools.context.repo,
+    content,
+    encoding: 'base64',
+  })
+  return blobData.data
 }
