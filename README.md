@@ -41,6 +41,10 @@ jobs:
 
 You can also use this action with other events - you'll just need to specify a `tag_name` (see below).
 
+In order for the publish workflow to work correctly, you will need to modify the permissions for the GitHub token provided to workflows for the repository.
+You can modify this setting in the repositories settings/actions/general, under "workflow permissions".
+By default, only read permission is given, and this action needs write perissions.
+
 ## Example `package.json` for your project
 
 The two important thing you'll need to set in your action are the `main` field and the `build` script. Here's an example of a minimal `package.json` that will use `@vercel/ncc` to compile your action to `dist/index.js`, update your `action.yml` file to use the `node16` runtime and point `build-and-tag-action` at the compiled file:
