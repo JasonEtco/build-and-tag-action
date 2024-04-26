@@ -29,12 +29,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.release.tag_name }}
       - name: Install deps and build
         run: npm ci && npm run build
-      - uses: JasonEtco/build-and-tag-action@v2
+      - uses: hernanvicente/build-and-tag-action@v2
         env:
           GITHUB_TOKEN: ${{ github.token }}
 ```
@@ -66,7 +66,7 @@ The tag to update. If the workflow event is `release`, it will use the `tag_name
 ```yaml
 - uses: fictional/releaser@v1 # Not a real action!
   id: releaser
-- uses: JasonEtco/build-and-tag-action@v2
+- uses: hernanvicente/build-and-tag-action@v2
   with:
     tag_name: ${{ steps.releaser.outputs.tag_name }}
 ```

@@ -1,7 +1,7 @@
 name: Build and Tag
 description: Properly tags your GitHub Action
 runs:
-  using: node16
+  using: node20
   main: dist/index.js
 branding:
   icon: archive
