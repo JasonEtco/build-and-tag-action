@@ -1,7 +1,7 @@
 import { Toolkit } from 'actions-toolkit'
 import readFile from './read-file'
 
-export default async function createCommit(tools: Toolkit) {
+export default async function createCommit(tools: Toolkit, commitMessage?: string) {
   const { main } = tools.getPackageJSON<{ main?: string }>()
 
   if (!main) {
@@ -32,7 +32,7 @@ export default async function createCommit(tools: Toolkit) {
   tools.log.info('Creating commit')
   const commit = await tools.github.git.createCommit({
     ...tools.context.repo,
-    message: 'Automatic compilation',
+    message: commitMessage || 'Automatic compilation',
     tree: tree.data.sha,
     parents: [tools.context.sha]
   })
