@@ -29,6 +29,9 @@ describe('build-and-tag-action', () => {
       .reply(200, { commit: { sha: '123abc' } })
       .post('/repos/JasonEtco/test/git/trees')
       .reply(200)
+      .post('/repos/JasonEtco/test/git/blobs')
+      .times(2)
+      .reply(200)
 
     await buildAndTagAction(tools)
 
@@ -50,6 +53,9 @@ describe('build-and-tag-action', () => {
       .reply(200, { commit: { sha: '123abc' } })
       .post('/repos/JasonEtco/test/git/trees')
       .reply(200)
+      .post('/repos/JasonEtco/test/git/blobs')
+      .times(2)
+      .reply(200)
 
     await buildAndTagAction(tools)
 
@@ -63,6 +69,9 @@ describe('build-and-tag-action', () => {
       .post('/repos/JasonEtco/test/git/commits')
       .reply(200, { commit: { sha: '123abc' } })
       .post('/repos/JasonEtco/test/git/trees')
+      .reply(200)
+      .post('/repos/JasonEtco/test/git/blobs')
+      .times(2)
       .reply(200)
 
     tools.context.payload.release.draft = true
@@ -79,6 +88,9 @@ describe('build-and-tag-action', () => {
       .post('/repos/JasonEtco/test/git/commits')
       .reply(200, { commit: { sha: '123abc' } })
       .post('/repos/JasonEtco/test/git/trees')
+      .reply(200)
+      .post('/repos/JasonEtco/test/git/blobs')
+      .times(2)
       .reply(200)
 
     tools.context.payload.release.prerelease = true
@@ -102,6 +114,9 @@ describe('build-and-tag-action', () => {
       .post('/repos/JasonEtco/test/git/commits')
       .reply(200, { commit: { sha: '123abc' } })
       .post('/repos/JasonEtco/test/git/trees')
+      .reply(200)
+      .post('/repos/JasonEtco/test/git/blobs')
+      .times(2)
       .reply(200)
 
     tools.context.event = 'pull_request'

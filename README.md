@@ -71,6 +71,18 @@ The tag to update. If the workflow event is `release`, it will use the `tag_name
     tag_name: ${{ steps.releaser.outputs.tag_name }}
 ```
 
+**additional_files**
+
+If you need to include more than just `main` in your built commit, you can provide a list of comma separated files as the `additional_files` input. These files will be added and committed when the tag is updated:
+
+```yaml
+- uses: fictional/releaser@v1 # Not a real action!
+  id: releaser
+- uses: JasonEtco/build-and-tag-action@v1
+  with:
+    additional_files: 'index.cache.js,another.js'
+```
+
 ## Motivation
 
 The [guide to JavaScript Actions](https://help.github.com/en/actions/building-actions/creating-a-javascript-action) recommends including `node_modules` in your repository, and manual steps to [following the versioning recommendations](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md#versioning). There are anti-patterns there that just don't sit right with me; so we can enable the same workflow, automatically!
